@@ -2,6 +2,7 @@ import './styles.css';
 import {
   PHASES,
   advanceIfElapsed,
+  applySettings,
   pause,
   remaining,
   reset,
@@ -12,11 +13,17 @@ import { loadState, saveState } from './storage.js';
 
 const phaseLabel = document.querySelector('#phase-label');
 const timeDisplay = document.querySelector('#time');
-const sessionDots = [...document.querySelectorAll('#session-dots span')];
 const sessionDotsContainer = document.querySelector('#session-dots');
 const sessionCount = document.querySelector('#session-count');
 const toggleButton = document.querySelector('#toggle-button');
 const resetButton = document.querySelector('#reset-button');
+const settingsButton = document.querySelector('#settings-button');
+const settingsDialog = document.querySelector('#settings-dialog');
+const settingsForm = document.querySelector('#settings-form');
+const closeSettingsButton = document.querySelector('#close-settings');
+const focusMinutesInput = document.querySelector('#focus-minutes');
+const breakMinutesInput = document.querySelector('#break-minutes');
+const sessionsPerCycleInput = document.querySelector('#sessions-per-cycle');
 
 let state = loadState();
 
@@ -36,10 +43,25 @@ function formatTime(milliseconds) {
 
 function completedInCurrentSet() {
   if (state.phase === 'longBreak') {
-    return 4;
+    return state.settings.sessionsPerCycle;
   }
 
-  return state.completedFocusSessions % 4;
+  return state.completedFocusSessions % state.settings.sessionsPerCycle;
+}
+
+function renderSessionDots(completedDots) {
+  const dotCount = state.settings.sessionsPerCycle;
+
+  if (sessionDotsContainer.children.length !== dotCount) {
+    const dots = Array.from({ length: dotCount }, () =>
+      document.createElement('span'),
+    );
+    sessionDotsContainer.replaceChildren(...dots);
+  }
+
+  [...sessionDotsContainer.children].forEach((dot, index) => {
+    dot.classList.toggle('complete', index < completedDots);
+  });
 }
 
 function render() {
@@ -68,12 +90,9 @@ function render() {
     `${state.completedFocusSessions} ${completedLabel} completed`;
   sessionDotsContainer.setAttribute(
     'aria-label',
-    `${completedDots} of 4 focus sessions completed in this set`,
+    `${completedDots} of ${state.settings.sessionsPerCycle} focus sessions completed in this set`,
   );
-
-  sessionDots.forEach((dot, index) => {
-    dot.classList.toggle('complete', index < completedDots);
-  });
+  renderSessionDots(completedDots);
 
   document.title = `${displayTime} · ${PHASES[state.phase].label}`;
 }
@@ -89,6 +108,31 @@ toggleButton.addEventListener('click', () => {
 
 resetButton.addEventListener('click', () => {
   commit(reset(state));
+});
+
+settingsButton.addEventListener('click', () => {
+  focusMinutesInput.value = state.settings.focusMinutes;
+  breakMinutesInput.value = state.settings.breakMinutes;
+  sessionsPerCycleInput.value = state.settings.sessionsPerCycle;
+  settingsDialog.showModal();
+  focusMinutesInput.focus();
+});
+
+closeSettingsButton.addEventListener('click', () => {
+  settingsDialog.close();
+});
+
+settingsForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  commit(
+    applySettings(state, {
+      focusMinutes: Number(focusMinutesInput.value),
+      breakMinutes: Number(breakMinutesInput.value),
+      sessionsPerCycle: Number(sessionsPerCycleInput.value),
+    }),
+  );
+  settingsDialog.close();
 });
 
 document.addEventListener('visibilitychange', () => {

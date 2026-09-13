@@ -6,8 +6,9 @@ the browser throttles background tabs.
 
 ## Features
 
-- 25-minute focus, 5-minute short break, and 15-minute long break phases
-- Long break after every fourth completed focus session
+- Customizable focus time, rest time, and sessions per cycle
+- Defaults to 25-minute focus, 5-minute rest, and 3 sessions
+- 15-minute long break after the final focus session in each cycle
 - Start, pause, resume, and reset controls
 - Persisted timer and session count
 - Responsive light and dark themes

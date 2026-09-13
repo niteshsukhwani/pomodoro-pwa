@@ -12,6 +12,15 @@
   <body>
     <main class="app" aria-labelledby="phase-label">
       <section class="timer-card">
+        <button
+          id="settings-button"
+          class="settings-button"
+          type="button"
+          aria-haspopup="dialog"
+        >
+          Settings
+        </button>
+
         <p class="eyebrow">Pomodoro</p>
         <h1 id="phase-label">Focus</h1>
 
@@ -25,8 +34,8 @@
           25:00
         </div>
 
-        <div id="session-dots" class="session-dots" aria-label="0 of 4 focus sessions completed">
-          <span></span><span></span><span></span><span></span>
+        <div id="session-dots" class="session-dots" aria-label="0 of 3 focus sessions completed">
+          <span></span><span></span><span></span>
         </div>
 
         <div class="actions">
@@ -37,6 +46,56 @@
         <p id="session-count" class="session-count">0 focus sessions completed</p>
       </section>
     </main>
+
+    <dialog id="settings-dialog" class="settings-dialog">
+      <form id="settings-form" method="dialog">
+        <div class="settings-heading">
+          <div>
+            <p class="eyebrow">Preferences</p>
+            <h2>Timer settings</h2>
+          </div>
+          <button
+            id="close-settings"
+            class="icon-button"
+            type="button"
+            aria-label="Close settings"
+          >
+            &times;
+          </button>
+        </div>
+
+        <label>
+          <span>Pomodoro time</span>
+          <span class="input-with-unit">
+            <input id="focus-minutes" name="focusMinutes" type="number" min="1" max="120" required />
+            <span>min</span>
+          </span>
+        </label>
+
+        <label>
+          <span>Rest time</span>
+          <span class="input-with-unit">
+            <input id="break-minutes" name="breakMinutes" type="number" min="1" max="60" required />
+            <span>min</span>
+          </span>
+        </label>
+
+        <label>
+          <span>Sessions per cycle</span>
+          <input
+            id="sessions-per-cycle"
+            name="sessionsPerCycle"
+            type="number"
+            min="1"
+            max="12"
+            required
+          />
+        </label>
+
+        <p class="settings-note">A 15-minute long break follows the final session.</p>
+        <button class="primary save-settings" type="submit">Save settings</button>
+      </form>
+    </dialog>
 
     <script type="module" src="/src/main.js"></script>
   </body>

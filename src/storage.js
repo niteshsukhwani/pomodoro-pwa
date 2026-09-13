@@ -1,4 +1,9 @@
-import { PHASES, advanceIfElapsed, createInitialState } from './timer.js';
+import {
+  PHASES,
+  advanceIfElapsed,
+  createInitialState,
+  normalizeSettings,
+} from './timer.js';
 
 const STORAGE_KEY = 'pomodoro-state-v1';
 const STATUSES = new Set(['idle', 'running', 'paused']);
@@ -25,12 +30,16 @@ function isValidState(value) {
 export function loadState(now = Date.now()) {
   try {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    const migratedState =
+      stored && typeof stored === 'object'
+        ? { ...stored, settings: normalizeSettings(stored.settings) }
+        : stored;
 
-    if (!isValidState(stored)) {
+    if (!isValidState(migratedState)) {
       return createInitialState();
     }
 
-    return advanceIfElapsed(stored, now);
+    return advanceIfElapsed(migratedState, now);
   } catch {
     return createInitialState();
   }
