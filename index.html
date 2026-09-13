@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="A focused, offline-ready Pomodoro timer." />
+    <meta name="theme-color" content="#b9384f" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <title>Pomodoro</title>
+  </head>
+  <body>
+    <main class="app" aria-labelledby="phase-label">
+      <section class="timer-card">
+        <p class="eyebrow">Pomodoro</p>
+        <h1 id="phase-label">Focus</h1>
+
+        <div
+          id="time"
+          class="time"
+          role="timer"
+          aria-live="off"
+          aria-label="25 minutes remaining"
+        >
+          25:00
+        </div>
+
+        <div id="session-dots" class="session-dots" aria-label="0 of 4 focus sessions completed">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="actions">
+          <button id="toggle-button" class="primary" type="button">Start</button>
+          <button id="reset-button" class="secondary" type="button">Reset</button>
+        </div>
+
+        <p id="session-count" class="session-count">0 focus sessions completed</p>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,194 @@
+:root {
+  color-scheme: light dark;
+  font-family:
+    Inter, ui-rounded, "SF Pro Rounded", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  color: #321b20;
+  background: #f8e9e6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 50% 15%, rgb(255 255 255 / 72%), transparent 42%),
+    #f8e9e6;
+}
+
+button {
+  font: inherit;
+}
+
+.app {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  place-items: center;
+  padding:
+    max(1.5rem, env(safe-area-inset-top))
+    max(1.25rem, env(safe-area-inset-right))
+    max(1.5rem, env(safe-area-inset-bottom))
+    max(1.25rem, env(safe-area-inset-left));
+}
+
+.timer-card {
+  width: min(100%, 30rem);
+  padding: clamp(2rem, 8vw, 4rem) clamp(1.5rem, 7vw, 3.5rem);
+  text-align: center;
+  background: rgb(255 255 255 / 64%);
+  border: 1px solid rgb(255 255 255 / 75%);
+  border-radius: 2rem;
+  box-shadow: 0 1.5rem 4rem rgb(85 29 40 / 14%);
+  backdrop-filter: blur(18px);
+}
+
+.eyebrow {
+  margin: 0 0 0.6rem;
+  color: #a13b4e;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.4rem, 5vw, 2rem);
+}
+
+.time {
+  margin: 1.5rem 0 1.25rem;
+  font-size: clamp(4.5rem, 21vw, 7.5rem);
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.session-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-bottom: 2rem;
+}
+
+.session-dots span {
+  width: 0.65rem;
+  height: 0.65rem;
+  background: #d7b5bb;
+  border-radius: 50%;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.session-dots span.complete {
+  background: #b9384f;
+  transform: scale(1.12);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 0.75rem;
+}
+
+button {
+  min-height: 3.25rem;
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 750;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+button:hover {
+  filter: brightness(1.04);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:focus-visible {
+  outline: 3px solid #5e1725;
+  outline-offset: 3px;
+}
+
+.primary {
+  color: #fff;
+  background: #b9384f;
+}
+
+.secondary {
+  color: #6e2835;
+  background: #efd6d9;
+}
+
+.session-count {
+  min-height: 1.25rem;
+  margin: 1.4rem 0 0;
+  color: #79545b;
+  font-size: 0.85rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #fff2f3;
+    background: #201417;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 50% 15%, rgb(124 42 58 / 28%), transparent 44%),
+      #201417;
+  }
+
+  .timer-card {
+    background: rgb(57 33 38 / 76%);
+    border-color: rgb(255 255 255 / 8%);
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 28%);
+  }
+
+  .eyebrow {
+    color: #f18a9d;
+  }
+
+  .session-dots span {
+    background: #76515a;
+  }
+
+  .session-dots span.complete,
+  .primary {
+    background: #df526b;
+  }
+
+  .secondary {
+    color: #ffdce2;
+    background: #68404a;
+  }
+
+  .session-count {
+    color: #cfabb3;
+  }
+
+  button:focus-visible {
+    outline-color: #ffb4c1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
